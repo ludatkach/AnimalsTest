@@ -37,5 +37,9 @@
     "chromedriver": "^84.0.0",
     "prettier": "^2.0.5",
     "wdio-chromedriver-service": "^6.0.3"
+  },
+  "dependencies": {
+    "axios": "^0.20.0",
+    "chai": "^4.2.0"
   }
 }
