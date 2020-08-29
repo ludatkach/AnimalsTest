@@ -10,6 +10,7 @@ describe('TEST TASK', () => {
 
   before('go to getnada.com', () => {
     browser.url('https://getnada.com');
+    browser.maximizeWindow();
   });
 
   it('should be a right title ', () => {
@@ -18,8 +19,8 @@ describe('TEST TASK', () => {
 
   it('should create an email', () => {
     browser.$('//i[@class="icon-plus"]').click();
-    let useName = browser.$('//input[@class="user_name"]').getValue();
-    userEmail = useName + '@getnada.com';
+    let userName = browser.$('//input[@class="user_name"]').getValue();
+    userEmail = userName + '@getnada.com';
     browser.$('//a[@class="button success"]').click();
     expect(browser.$('//a[@class=" is-active"]//span').getText()).eq(userEmail);
   });
@@ -33,7 +34,7 @@ describe('TEST TASK', () => {
       .then(res => res.data)
       .catch(err => err.response.data)
     catImage = result.file;
-    expect(result.file).to.match(/.jpe?g|.png|mp4|gif$/i);
+    expect(result.file).to.match(/.jpe?g|.png|.mp4|.gif|.webm$/i);
   });
 
   it('should get dog image url', async  () => {
@@ -44,7 +45,7 @@ describe('TEST TASK', () => {
       .then(res => res.data)
       .catch(err => err.response.data)
     dogImage = result.url;
-    expect(result.url).to.match(/.jpe?g|.png|mp4|gif$/i);
+    expect(result.url).to.match(/.jpe?g|.png|.mp4|.gif|.webm$/i);
   });
 
   it('should get fox image url', async  () => {
@@ -55,7 +56,7 @@ describe('TEST TASK', () => {
       .then(res => res.data)
       .catch(err => err.response.data)
     foxImage = result.image;
-    expect(result.image).to.match(/.jpe?g|.png|mp4|gif$/i);
+    expect(result.image).to.match(/.jpe?g|.png|.mp4|.gif|.webm$/i);
   });
 
   it('should login in gmail', () => {
@@ -72,10 +73,19 @@ describe('TEST TASK', () => {
   it('should create letter in gmail account and send it to another email', () => {
     browser.$('//div[@class="T-I T-I-KE L3"]').click();
     browser.$('//textarea[@id=":8y"]').setValue(userEmail);
+    //browser.$('//div[@id=":ac"]').setValue(userEmail);
     browser.$('//div[@id=":9l"]').setValue(catImage + "\n" + dogImage + "\n" + foxImage);
     browser.$('//div[@id=":86"]').click();
     browser.waitUntil( () => browser.$('//span[@class="bAq"]').isDisplayed());
-
+    expect(browser.$('//span[@class="bAq"]').isDisplayed()).eq(true);
   });
+
+  it('should print email', () => {
+    console.log('######################################');
+    console.log(userEmail);
+    console.log('######################################');
+  });
+
+
 
 });
