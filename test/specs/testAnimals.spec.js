@@ -6,7 +6,7 @@ let catImage;
 let dogImage;
 let foxImage;
 
-describe('CREATE EMAIL ON GETNADA', () => {
+describe('TEST TASK', () => {
 
   before('go to getnada.com', () => {
     browser.url('https://getnada.com');
@@ -69,7 +69,7 @@ describe('CREATE EMAIL ON GETNADA', () => {
     browser.waitUntil( () => browser.$('//img[@class="gb_va"]').isDisplayed());
   });
 
-  it('should create letter in gmail account', () => {
+  it('should create letter in gmail account and send it to another email', () => {
     browser.$('//div[@class="T-I T-I-KE L3"]').click();
     browser.$('//textarea[@id=":8y"]').setValue(userEmail);
     browser.$('//div[@id=":9l"]').setValue(catImage + "\n" + dogImage + "\n" + foxImage);
