@@ -103,4 +103,19 @@ describe('TEST TASK', () => {
     expect(dogUrl).eq(dogImage);
     expect(foxUrl).eq(foxImage);
   });
+
+  it('should take screenshot of cat image', () => {
+    browser.url(catImage);
+    browser.saveScreenshot('test/img/catImage.png');
+  });
+
+  it('should take screenshot of dog image', () => {
+    browser.url(dogImage);
+    browser.saveScreenshot('test/img/dogImage.png');
+  });
+
+  it('should take screenshot of fox image', () => {
+    browser.url(foxImage);
+    browser.saveScreenshot('test/img/foxImage.png');
+  });
 });
