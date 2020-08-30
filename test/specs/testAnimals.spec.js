@@ -1,10 +1,15 @@
 const { expect } = require('chai');
 import axios from 'axios';
+const fs = require('fs');
 
 let userEmail;
 let catImage;
 let dogImage;
 let foxImage;
+let catUrl;
+let dogUrl;
+let foxUrl;
+let fileName;
 
 describe('TEST TASK', () => {
   before('go to getnada.com', () => {
@@ -22,7 +27,7 @@ describe('TEST TASK', () => {
     let d = new Date();
     userName = userName + d.getTime();
     userEmail = userName + '@getnada.com';
-    browser.$('//input[@class="user_name"]').keys("Control", "a");
+    browser.$('//input[@class="user_name"]').keys('Control', 'a');
     browser.$('//input[@class="user_name"]').setValue(userName);
 
     browser.$('//a[@class="button success"]').click();
@@ -68,7 +73,6 @@ describe('TEST TASK', () => {
     browser.$('//input[@id="identifierId"]').setValue('lt364226@gmail.com');
     browser.$('//div[@class="VfPpkd-RLmnJb"]').click();
     browser.waitUntil(() => browser.$('//input[@type="password"]').isDisplayed());
-    //browser.waitUntil( () => browser.$('//div[@id="profileIdentifier"]').isDisplayed());
     browser.$('//input[@class="whsOnd zHQkBf"]').setValue('lt112233');
     browser.$('//div[@class="VfPpkd-RLmnJb"]').click();
     browser.waitUntil(() => browser.$('//img[@class="gb_va"]').isDisplayed());
@@ -78,6 +82,7 @@ describe('TEST TASK', () => {
   it('should create letter in gmail account and send it to another email', () => {
     browser.$('//div[@class="T-I T-I-KE L3"]').click();
     browser.$('//textarea[@class="vO"]').setValue(userEmail);
+    browser.$('//input[@name="subjectbox"]').setValue('My favorite animals');
     browser
       .$('//div[@class="Am Al editable LW-avf tS-tW"]')
       .setValue(catImage + '\n' + dogImage + '\n' + foxImage);
@@ -88,7 +93,9 @@ describe('TEST TASK', () => {
 
   it('should check email with 3 url in getnada email box', () => {
     browser.switchWindow('https://getnada.com/');
-    browser.waitUntil(() => browser.$('//li[@class="msg_item"]').isClickable(), { timeout: 120000 });
+    browser.waitUntil(() => browser.$('//li[@class="msg_item"]').isClickable(), {
+      timeout: 120000,
+    });
     browser.$('//li[@class="msg_item"]').click();
     browser.waitUntil(() => browser.$('//iframe[@id="idIframe"]').isDisplayed());
     const emailFrame = browser.$('//iframe[@id="idIframe"]');
@@ -96,26 +103,32 @@ describe('TEST TASK', () => {
     browser.waitUntil(() => browser.$('//a[text()="' + catImage + '"]').isDisplayed());
     browser.waitUntil(() => browser.$('//a[text()="' + dogImage + '"]').isDisplayed());
     browser.waitUntil(() => browser.$('//a[text()="' + foxImage + '"]').isDisplayed());
-    let catUrl = browser.$('//div[@dir="ltr"]/a').getAttribute('href');
-    let dogUrl = browser.$('(//div[@dir="ltr"]/div/a)[1]').getAttribute('href');
-    let foxUrl = browser.$('(//div[@dir="ltr"]/div/a)[2]').getAttribute('href');
+    catUrl = browser.$('//div[@dir="ltr"]/a').getAttribute('href');
+    dogUrl = browser.$('(//div[@dir="ltr"]/div/a)[1]').getAttribute('href');
+    foxUrl = browser.$('(//div[@dir="ltr"]/div/a)[2]').getAttribute('href');
     expect(catUrl).eq(catImage);
     expect(dogUrl).eq(dogImage);
     expect(foxUrl).eq(foxImage);
   });
 
   it('should take screenshot of cat image', () => {
-    browser.url(catImage);
-    browser.saveScreenshot('test/img/catImage.png');
+    fileName = 'test/img/catImage.png';
+    browser.url(catUrl);
+    browser.saveScreenshot(fileName);
+    expect(fs.existsSync(fileName)).eq(true);
   });
 
   it('should take screenshot of dog image', () => {
-    browser.url(dogImage);
-    browser.saveScreenshot('test/img/dogImage.png');
+    fileName = 'test/img/dogImage.png';
+    browser.url(dogUrl);
+    browser.saveScreenshot(fileName);
+    expect(fs.existsSync(fileName)).eq(true);
   });
 
   it('should take screenshot of fox image', () => {
-    browser.url(foxImage);
-    browser.saveScreenshot('test/img/foxImage.png');
+    fileName = 'test/img/foxImage.png';
+    browser.url(foxUrl);
+    browser.saveScreenshot(fileName);
+    expect(fs.existsSync(fileName)).eq(true);
   });
 });
