@@ -68,18 +68,20 @@ describe('TEST TASK', () => {
   });
 
   it('should login in gmail', () => {
+    let gmailUserName = process.env.GMAILUSERNAME;
+    let gmailUserPassword = process.env.GMAILUSERPASSWORD;
     browser.newWindow('https://mail.google.com');
     browser.maximizeWindow();
-    browser.$('//input[@id="identifierId"]').setValue('lt364226@gmail.com');
+    browser.$('//input[@id="identifierId"]').setValue(gmailUserName);
     browser.$('//div[@class="VfPpkd-RLmnJb"]').click();
     browser.waitUntil(() => browser.$('//input[@type="password"]').isDisplayed());
-    browser.$('//input[@class="whsOnd zHQkBf"]').setValue('lt112233');
+    browser.$('//input[@class="whsOnd zHQkBf"]').setValue(gmailUserPassword);
     browser.$('//div[@class="VfPpkd-RLmnJb"]').click();
     browser.waitUntil(() => browser.$('//img[@class="gb_va"]').isDisplayed());
     expect(browser.$('//div[@class="T-I T-I-KE L3"]').isClickable()).eq(true);
   });
 
-  it('should create letter in gmail account and send it to another email', () => {
+  it('should create letter in gmail account and send it to getnada email account', () => {
     browser.$('//div[@class="T-I T-I-KE L3"]').click();
     browser.$('//textarea[@class="vO"]').setValue(userEmail);
     browser.$('//input[@name="subjectbox"]').setValue('My favorite animals');
@@ -111,21 +113,21 @@ describe('TEST TASK', () => {
     expect(foxUrl).eq(foxImage);
   });
 
-  it('should take screenshot of cat image', () => {
+  it('should take screenshot of cat image and save to a file', () => {
     fileName = 'test/img/catImage.png';
     browser.url(catUrl);
     browser.saveScreenshot(fileName);
     expect(fs.existsSync(fileName)).eq(true);
   });
 
-  it('should take screenshot of dog image', () => {
+  it('should take screenshot of dog image and save to a file', () => {
     fileName = 'test/img/dogImage.png';
     browser.url(dogUrl);
     browser.saveScreenshot(fileName);
     expect(fs.existsSync(fileName)).eq(true);
   });
 
-  it('should take screenshot of fox image', () => {
+  it('should take screenshot of fox image and save to a file', () => {
     fileName = 'test/img/foxImage.png';
     browser.url(foxUrl);
     browser.saveScreenshot(fileName);
