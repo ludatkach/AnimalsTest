@@ -27,7 +27,9 @@ describe('TEST TASK', () => {
     let d = new Date();
     userName = userName + d.getTime();
     userEmail = userName + '@getnada.com';
-    browser.$('//input[@class="user_name"]').keys('Control', 'a');
+    browser.$('//input[@class="user_name"]').click();
+    browser.$('//input[@class="user_name"]').keys(['Control', 'a']);
+    browser.$('//input[@class="user_name"]').keys('Delete');
     browser.$('//input[@class="user_name"]').setValue(userName);
 
     browser.$('//a[@class="button success"]').click();
@@ -42,7 +44,7 @@ describe('TEST TASK', () => {
       .then(res => res.data)
       .catch(err => err.response.data);
     catImage = result.file;
-    expect(result.file).to.match(/.jpe?g|.png|.mp4|.gif|.webm$/i);
+    expect(result.file).to.match(/\.(jpe?g|png|mp4|gif|webm|webp|tiff?)$/i);
   });
 
   it('should get API dog image url', async () => {
@@ -53,7 +55,7 @@ describe('TEST TASK', () => {
       .then(res => res.data)
       .catch(err => err.response.data);
     dogImage = result.url;
-    expect(result.url).to.match(/.jpe?g|.png|.mp4|.gif|.webm$/i);
+    expect(result.url).to.match(/\.(jpe?g|png|mp4|gif|webm|webp|tiff?)$/i);
   });
 
   it('should get API fox image url', async () => {
@@ -64,7 +66,7 @@ describe('TEST TASK', () => {
       .then(res => res.data)
       .catch(err => err.response.data);
     foxImage = result.image;
-    expect(result.image).to.match(/.jpe?g|.png|.mp4|.gif|.webm$/i);
+    expect(result.image).to.match(/\.(jpe?g|png|mp4|gif|webm|webp|tiff?)$/i);
   });
 
   it('should login in gmail', () => {
@@ -111,6 +113,13 @@ describe('TEST TASK', () => {
     expect(catUrl).eq(catImage);
     expect(dogUrl).eq(dogImage);
     expect(foxUrl).eq(foxImage);
+  });
+
+  it('should create img directory', () => {
+    if (!fs.existsSync('./test/img')) {
+      fs.mkdirSync('./test/img');
+    }
+    expect(fs.existsSync('./test/img')).eq(true);
   });
 
   it('should take screenshot of cat image and save to a file', () => {
