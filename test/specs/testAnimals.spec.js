@@ -3,6 +3,7 @@ import axios from 'axios';
 const fs = require('fs');
 
 let userEmail;
+let regExMatch = /\.(jpe?g|png|mp4|gif|webm|webp|tiff?)$/i;
 let catImage;
 let dogImage;
 let foxImage;
@@ -44,7 +45,7 @@ describe('TEST TASK', () => {
       .then(res => res.data)
       .catch(err => err.response.data);
     catImage = result.file;
-    expect(result.file).to.match(/\.(jpe?g|png|mp4|gif|webm|webp|tiff?)$/i);
+    expect(result.file).to.match(regExMatch);
   });
 
   it('should get API dog image url', async () => {
@@ -55,7 +56,7 @@ describe('TEST TASK', () => {
       .then(res => res.data)
       .catch(err => err.response.data);
     dogImage = result.url;
-    expect(result.url).to.match(/\.(jpe?g|png|mp4|gif|webm|webp|tiff?)$/i);
+    expect(result.url).to.match(regExMatch);
   });
 
   it('should get API fox image url', async () => {
@@ -66,7 +67,7 @@ describe('TEST TASK', () => {
       .then(res => res.data)
       .catch(err => err.response.data);
     foxImage = result.image;
-    expect(result.image).to.match(/\.(jpe?g|png|mp4|gif|webm|webp|tiff?)$/i);
+    expect(result.image).to.match(regExMatch);
   });
 
   it('should login in gmail', () => {
