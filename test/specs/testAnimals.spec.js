@@ -19,22 +19,26 @@ describe('TEST TASK', () => {
   });
 
   it('should have a right title ', () => {
-    expect(browser.getTitle()).eq('Nada - temp mail - fast and free');
+    expect(browser.getTitle()).eq('nada - Disposable Temp Email');
   });
 
   it('should create an email', () => {
-    browser.$('//i[@class="icon-plus"]').click();
-    let userName = browser.$('//input[@class="user_name"]').getValue();
+    browser.$('//li[@class="items-center"]//button').click();
+    let userName = browser.$('//input[@id="grid-first-name"]').getValue();
+    let domain = browser.$('//select').getValue();
     let d = new Date();
     userName = userName + d.getTime();
-    userEmail = userName + '@getnada.com';
-    browser.$('//input[@class="user_name"]').click();
-    browser.$('//input[@class="user_name"]').keys(['Control', 'a']);
-    browser.$('//input[@class="user_name"]').keys('Delete');
-    browser.$('//input[@class="user_name"]').setValue(userName);
+    userEmail = userName + '@' + domain;   // '@getnada.com';
+    browser.$('//input[@id="grid-first-name"]').click();
+    browser.$('//input[@id="grid-first-name"]').keys(['Control', 'a']);
+    browser.$('//input[@id="grid-first-name"]').keys('Delete');
+    browser.$('//input[@id="grid-first-name"]').setValue(userName);
 
-    browser.$('//a[@class="button success"]').click();
-    expect(browser.$('//a[@class=" is-active"]//span').getText()).eq(userEmail);
+    browser.$('//form/button[@type="button"]').click();
+    //expect(browser.$('//a[@class=" is-active"]//span').getText()).eq(userEmail);
+    let ar = browser.$('//p[@class="p-3"]').getText();
+    let ba = 'waiting for incoming emails for ' + userEmail;
+    expect(browser.$('//p[@class="p-3"]').getText()).eq('waiting for incoming emails for ' + userEmail);
   });
 
   it('should get API cat image url', async () => {
@@ -80,7 +84,7 @@ describe('TEST TASK', () => {
     browser.waitUntil(() => browser.$('//input[@type="password"]').isDisplayed());
     browser.$('//input[@class="whsOnd zHQkBf"]').setValue(gmailUserPassword);
     browser.$('//div[@class="VfPpkd-RLmnJb"]').click();
-    browser.waitUntil(() => browser.$('//img[@class="gb_va"]').isDisplayed());
+    browser.waitUntil(() => browser.$('//img[@class="gb_uc"]').isDisplayed());
     expect(browser.$('//div[@class="T-I T-I-KE L3"]').isClickable()).eq(true);
   });
 
@@ -98,12 +102,12 @@ describe('TEST TASK', () => {
 
   it('should check email with 3 url in getnada email box', () => {
     browser.switchWindow('https://getnada.com/');
-    browser.waitUntil(() => browser.$('//li[@class="msg_item"]').isClickable(), {
+    browser.waitUntil(() => browser.$('//a[text()="My favorite animals"]').isClickable(), {
       timeout: 120000,
     });
-    browser.$('//li[@class="msg_item"]').click();
-    browser.waitUntil(() => browser.$('//iframe[@id="idIframe"]').isDisplayed());
-    const emailFrame = browser.$('//iframe[@id="idIframe"]');
+    browser.$('//a[text()="My favorite animals"]').click();
+    browser.waitUntil(() => browser.$('//iframe[@id="the_message_iframe"]').isDisplayed());
+    const emailFrame = browser.$('//iframe[@id="the_message_iframe"]');
     browser.switchToFrame(emailFrame);
     browser.waitUntil(() => browser.$('//a[text()="' + catImage + '"]').isDisplayed());
     browser.waitUntil(() => browser.$('//a[text()="' + dogImage + '"]').isDisplayed());
