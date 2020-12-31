@@ -28,16 +28,12 @@ describe('TEST TASK', () => {
     let domain = browser.$('//select').getValue();
     let d = new Date();
     userName = userName + d.getTime();
-    userEmail = userName + '@' + domain;   // '@getnada.com';
+    userEmail = userName + '@' + domain;
     browser.$('//input[@id="grid-first-name"]').click();
     browser.$('//input[@id="grid-first-name"]').keys(['Control', 'a']);
     browser.$('//input[@id="grid-first-name"]').keys('Delete');
     browser.$('//input[@id="grid-first-name"]').setValue(userName);
-
     browser.$('//form/button[@type="button"]').click();
-    //expect(browser.$('//a[@class=" is-active"]//span').getText()).eq(userEmail);
-    let ar = browser.$('//p[@class="p-3"]').getText();
-    let ba = 'waiting for incoming emails for ' + userEmail;
     expect(browser.$('//p[@class="p-3"]').getText()).eq('waiting for incoming emails for ' + userEmail);
   });
 
